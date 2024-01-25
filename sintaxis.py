@@ -10,3 +10,8 @@ comentarios
 de 
 varias líneas
 '''
+
+#2 cadenas 
+
+print ('Soy una cadena')
+print("Soy otra cadena")
