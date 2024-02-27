@@ -2,6 +2,7 @@ class Armas:
     
     def seleccionarArma(self, nombre):
         seleccion = int(input("Seleccionar el arma: \n 1 = Rifle de asalto\n 2 = Espada de energia \n 3 = Rifle M392"))
+        print("")
         
         if(seleccion == 1):
             print("Rifle de asalto asignado a " + nombre)
