@@ -21,16 +21,16 @@ print("")
 
 #Usamos los atributos Spartan
 print("===== El objeto Spartan contiene ======")
-print(spartan.nombre)
-print(spartan.especie)
-print(spartan.altura)
+print(spartan.get__nombre())
+print(spartan.get__especie())
+print(spartan.get__altura())
 print("")
 
 #Usamos los atributos Nemesis
 print("===== El objeto Nemesis contiene ======")
-print(Nemesis.nombre)
-print(Nemesis.especie)
-print(Nemesis.altura)
+print(Nemesis.get__nombre())
+print(Nemesis.get__especie())
+print(Nemesis.get__altura())
 print("")
 
 #Usamos los metodos del Spartan
@@ -47,5 +47,5 @@ print("")
 
 
 #Usamos los metodos del Arma
-Arma.seleccionarArma(spartan.nombre)
+Arma.seleccionarArma(spartan.get__nombre())
 Arma.recargarArma(65)
