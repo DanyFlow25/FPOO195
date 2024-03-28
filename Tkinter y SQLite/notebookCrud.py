@@ -10,13 +10,29 @@ def ejecutaInsert():
 
 def busUsuario():
     usuarioBD = objControlador.buscarUsuario(varBus.get())
-    if usuarioBD == []:
+    if not usuarioBD:
         messagebox.showwarning("Nada", "Usuario no encontrado")
     else:
         Usuario.delete(1.0, tk.END)
         for usuario in usuarioBD:
             Usuario.insert(tk.END, f"ID: {usuario[0]}\nNombre: {usuario[1]}\nCorreo: {usuario[2]}\n\n")
-
+# Creé el método para mostrar los usuarios
+def buscartodos():
+    usuarios = objControlador.consultarUsuarios()
+    ventana_usuarios = tk.Toplevel()
+    ventana_usuarios.title("Consulta de Usuarios")
+    frame = ttk.Frame(ventana_usuarios)
+    frame.pack(padx=10, pady=10)
+    ttk.Label(frame, text="ID").grid(row=0, column=0, padx=5, pady=5)
+    ttk.Label(frame, text="Nombre").grid(row=0, column=1, padx=5, pady=5)
+    ttk.Label(frame, text="Correo").grid(row=0, column=2, padx=5, pady=5)
+    ttk.Label(frame, text="Contraseña").grid(row=0, column=3, padx=5, pady=5)
+    for i, usuario in enumerate(usuarios, start=1):
+        ttk.Label(frame, text=usuario[0]).grid(row=i, column=0, padx=5, pady=5)
+        ttk.Label(frame, text=usuario[1]).grid(row=i, column=1, padx=5, pady=5)
+        ttk.Label(frame, text=usuario[2]).grid(row=i, column=2, padx=5, pady=5)
+        ttk.Label(frame, text=usuario[3]).grid(row=i, column=3, padx=5, pady=5)
+        
 # Crear ventana
 ventana = Tk()
 ventana.title("CRUD de Usuarios")
@@ -70,4 +86,7 @@ Label(pestana2, text="Registrado:", fg="blue", font=("Mono", 14)).pack()
 Usuario = tk.Text(pestana2, height=5, width=52)
 Usuario.pack()
 
+# Pestaña 3: Consultar Usuarios
+Label(pestana3, text="Consultar Usuarios", fg="blue", font=("Mono", 18)).pack()
+Button(pestana3, text="Consultar Usuarios", command=buscartodos).pack()
 ventana.mainloop()

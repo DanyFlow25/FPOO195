@@ -1,5 +1,5 @@
 from tkinter import messagebox
-import sqlite3 
+import sqlite3
 import bcrypt
 
 class Controlador:
@@ -19,7 +19,7 @@ class Controlador:
 
     def insertUsuario(self, nom, corr, cont):
         conexion = self.conexion()
-        if (nom == "" or corr == "" or cont == ""):
+        if nom == "" or corr == "" or cont == "":
             messagebox.showwarning("Cuidado", "Inputs vacíos")
             conexion.close()
         else:
@@ -36,18 +36,29 @@ class Controlador:
     def buscarUsuario(self, id):
         conex = self.conexion()
         
-        if (id == ''):
+        if id == '':
             messagebox.showwarning("Cuidado", "Inputs vacíos, no seas tibio")
             conex.close()
         else:
             try:
                 cursor = conex.cursor()
-                sqlSelect = "Select * from tbUsuarios where id="+id
+                sqlSelect = f"Select * from tbUsuarios where id={id}"
                 cursor.execute(sqlSelect)
                 usuario = cursor.fetchall()
                 conex.close()
                 return usuario
             except sqlite3.OperationalError:
-                print("No se pudo ejecutar la busqueda") 
-            
-
+                print("No se pudo ejecutar la búsqueda") 
+# Creación de la función para Consultar Usuarios            
+    def consultarUsuarios(self):
+        conexion = self.conexion()
+        try:
+            cursor = conexion.cursor()
+            sqlSelect = "select * from tbUsuarios"
+            cursor.execute(sqlSelect)
+            usuarios = cursor.fetchall()
+            conexion.close()
+            return usuarios
+        
+        except sqlite3.OperationalError:
+            print("Error al consultar usuarios")
