@@ -2,9 +2,11 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 from Controlador import *
+from GeneradorPDF import *
+import os
 
 objControlador = Controlador()
-
+objPDF = GeneradorPDF()
 def ejecutaInsert():
     objControlador.insertUsuario(var1.get(), var2.get(), var3.get())
 
@@ -32,6 +34,17 @@ def buscartodos():
         ttk.Label(frame, text=usuario[1]).grid(row=i, column=1, padx=5, pady=5)
         ttk.Label(frame, text=usuario[2]).grid(row=i, column=2, padx=5, pady=5)
         ttk.Label(frame, text=usuario[3]).grid(row=i, column=3, padx=5, pady=5)
+
+def ejecutaPdf():
+    if varTitulo == "":
+        messagebox.showwarning("Escribe un nombre al PDF")
+    else:
+        objPDF.add_page()
+        objPDF.chapter_body()
+        objPDF.output(varTitulo.get()+".pdf")
+        rutaPDF = "C:/Users/Danie/Documents/UPQ/CUATRIMESTRE 5/Programación Orientada a objetos/Git/FPOO195/Tkinter y SQLite/"+varTitulo.get()+".pdf"
+        messagebox.showinfo("Archivo creado", "PDF disponible en carpeta")
+        os.system(f"start {rutaPDF}")
         
 # Crear ventana
 ventana = Tk()
@@ -48,6 +61,7 @@ pestana2 = ttk.Frame(panel)
 pestana3 = ttk.Frame(panel)
 pestana4 = ttk.Frame(panel)
 pestana5 = ttk.Frame(panel)
+pestana6 = ttk.Frame(panel)
 
 # Agregar las pestañas
 panel.add(pestana1, text="Crear usuario")
@@ -55,6 +69,7 @@ panel.add(pestana2, text="Buscar usuario")
 panel.add(pestana3, text="Consultar usuarios")
 panel.add(pestana4, text="Editar usuario")
 panel.add(pestana5, text="Eliminar usuario")
+panel.add(pestana6, text="Exportar PDF")
 
 # Pestaña 1: Formulario de Insert
 Label(pestana1, text="Registro de Usuarios", fg="blue", font=("Modern", 18)).pack()
@@ -89,4 +104,11 @@ Usuario.pack()
 # Pestaña 3: Consultar Usuarios
 Label(pestana3, text="Consultar Usuarios", fg="blue", font=("Mono", 18)).pack()
 Button(pestana3, text="Consultar Usuarios", command=buscartodos).pack()
+
+# Pestaña 6: Reportes en PDF
+Label(pestana6, text="Usuarios en PDF", fg="green", font=("Modern", 18)).pack()
+varTitulo = tk.StringVar()
+Label(pestana6, text="Escribe el título de tu archivo:").pack()
+Entry(pestana6, textvariable=varTitulo).pack()
+Button(pestana6, text="Crear PDF").pack()
 ventana.mainloop()
